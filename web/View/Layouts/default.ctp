@@ -8,19 +8,23 @@
         <meta name="viewport" content="width=device-width">
         <?php 
           echo $this->Html->meta('icon'); 
-          // echo $this->Html->css('cake.generic');
+          echo $this->Html->css('bootstrap.min.css');
+          echo $this->Html->css('bootstrap-theme.min.css');
+          echo $this->Html->css('main.css');
+
+          echo $this->Html->script('vendor/modernizr-2.6.2-respond-1.1.0.min.js');
 
           echo $this->fetch('meta');
           echo $this->fetch('css');
           echo $this->fetch('script');
         ?>
 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
 
-        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="css/main.css">
+        <!-- <link rel="stylesheet" href="css/bootstrap-theme.min.css"> -->
+        <!-- <link rel="stylesheet" href="css/main.css"> -->
 
-        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <!-- // <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script> -->
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -105,12 +109,11 @@
       <footer>
         <p>&copy; MahirRings 2014</p>
       </footer>
-    </div> <!-- /container -->        
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+    </div> <!-- /container --> 
 
-    <script src="js/vendor/bootstrap.min.js"></script>
+    <?php echo $this->Html->script('vendor/jquery-1.10.1.min.js'); ?>
+    <?php echo $this->Html->script('vendor/bootstrap.min.js'); ?>
+    <?php echo $this->Html->script('main.js'); ?>
 
-    <script src="js/main.js"></script>
     </body>
 </html>

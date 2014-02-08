@@ -5,14 +5,14 @@
 
   <Directory <%= @params[:docroot] %>>
     Options <%= [@params[:directory_options] || "FollowSymLinks" ].flatten.join " " %>
-    AllowOverride <%= [@params[:allow_override] || "None" ].flatten.join " " %>
+    AllowOverride All
     Order allow,deny
     Allow from all
   </Directory>
 
   <Directory />
     Options FollowSymLinks
-    AllowOverride None
+    AllowOverride All
   </Directory>
 
   <Location /server-status>
