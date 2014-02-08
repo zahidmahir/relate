@@ -1,0 +1,8 @@
+vagrant/.vagrant/
+
+.DS_Store
+
+web/tmp/*
+web/[Cc]onfig/core.php
+web/[Cc]onfig/database.php
+!empty
