@@ -25,7 +25,6 @@ DROP TABLE IF EXISTS `activities`;
 CREATE TABLE `activities` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `frequency` int(11) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -38,7 +37,7 @@ CREATE TABLE `activities` (
 
 LOCK TABLES `activities` WRITE;
 /*!40000 ALTER TABLE `activities` DISABLE KEYS */;
-INSERT INTO `activities` VALUES (1,'Play Basketball',NULL,'2014-02-09 06:13:16','2014-02-09 06:13:16'),(2,'Dance',NULL,'2014-02-09 06:13:23','2014-02-09 06:13:23'),(3,'Go running',NULL,'2014-02-09 06:13:29','2014-02-09 06:13:29'),(4,'Read books',NULL,'2014-02-09 06:13:35','2014-02-09 06:13:35'),(5,'Play games',NULL,'2014-02-09 06:13:40','2014-02-09 06:13:40'),(6,'Program',NULL,'2014-02-09 06:13:45','2014-02-09 06:13:45'),(7,'Rob banks',NULL,'2014-02-09 06:13:51','2014-02-09 06:13:51');
+INSERT INTO `activities` VALUES (1,'Play Basketball','2014-02-09 06:13:16','2014-02-09 06:13:16'),(2,'Dance','2014-02-09 06:13:23','2014-02-09 06:13:23'),(3,'Go running','2014-02-09 06:13:29','2014-02-09 06:13:29'),(4,'Read books','2014-02-09 06:13:35','2014-02-09 06:13:35'),(5,'Play games','2014-02-09 06:13:40','2014-02-09 06:13:40'),(6,'Program','2014-02-09 06:13:45','2014-02-09 06:13:45'),(7,'Rob banks','2014-02-09 06:13:51','2014-02-09 06:13:51');
 /*!40000 ALTER TABLE `activities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,8 +52,9 @@ CREATE TABLE `activities_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `activity_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
+  `frequency` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +63,7 @@ CREATE TABLE `activities_users` (
 
 LOCK TABLES `activities_users` WRITE;
 /*!40000 ALTER TABLE `activities_users` DISABLE KEYS */;
-INSERT INTO `activities_users` VALUES (1,2,3),(2,4,3),(3,2,3),(4,7,3);
+INSERT INTO `activities_users` VALUES (5,1,3,NULL),(6,3,3,NULL),(7,2,3,NULL),(8,6,3,NULL),(9,4,3,1),(10,1,3,4),(11,3,3,1),(12,1,3,7),(13,1,3,4),(14,2,3,1);
 /*!40000 ALTER TABLE `activities_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,4 +241,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-02-09  3:23:06
+-- Dump completed on 2014-02-09  5:43:52
