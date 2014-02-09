@@ -11,11 +11,6 @@
 			<?php echo h($activity['Activity']['name']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Frequency'); ?></dt>
-		<dd>
-			<?php echo h($activity['Activity']['frequency']); ?>
-			&nbsp;
-		</dd>
 		<dt><?php echo __('Created'); ?></dt>
 		<dd>
 			<?php echo h($activity['Activity']['created']); ?>

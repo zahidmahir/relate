@@ -5,7 +5,6 @@
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('name');
-		echo $this->Form->input('frequency');
 		echo $this->Form->input('User');
 	?>
 	</fieldset>

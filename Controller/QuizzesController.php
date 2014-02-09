@@ -13,12 +13,11 @@ class QuizzesController extends AppController {
  *
  * @var array
  */
-	var $uses = array('Quiz', 'Question', 'Activity');
+	var $uses = array('Quiz', 'Question', 'ActivitiesUser', 'Activity');
 	
 	public $components = array('Paginator');
 
 	public function take() {
-
 		if ($this->request->is('post')) {
 			debug($this->request->data);die;
 			
@@ -30,14 +29,20 @@ class QuizzesController extends AppController {
 			// 	$this->Session->setFlash(__('The quiz could not be saved. Please, try again.'));
 			// }
 		}
+		// $this->Question->recursive = 1;
 		$questions = $this->Question->find('all');
-		$activities = $this->Activity->find('all', 
+		$this->ActivitiesUser->recursive = 0;
+		$activities_user = $this->ActivitiesUser->find('all', array(
 			'conditions' => array(
-				'activity'
+				'user_id' => $this->Auth->user('id')
 			)
-		);
-		// debug($questions);die;
-		$this->set(compact('questions'));
+		));
+		$activities = array();
+		foreach($activities_user as $au) {
+			array_push($activities, array('id' => $au['Activity']['id'], 'name' => $au['Activity']['name']));
+		}
+
+		$this->set(compact('questions', 'activities'));
 	}
 
 
