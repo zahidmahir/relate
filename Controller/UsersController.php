@@ -13,7 +13,28 @@ class UsersController extends AppController {
  *
  * @var array
  */
+	
+	var $uses = array('User', 'Activity', 'ActivitiesUser');
+	
 	public $components = array('Paginator');
+
+	public function add_activity($activity_id = null) {
+		$this->autoRender = false;
+		if (!$this->Activity->exists($activity_id)) {
+			throw new NotFoundException(__('Invalid user'));
+		}
+		$this->ActivitiesUser->create();
+		$data = array(
+			'user_id' => $this->Auth->user('id'),
+			'activity_id' => $activity_id
+		);
+		if($this->ActivitiesUser->save($data)) {
+			$this->Session->setFlash(__('Activity has been added.'));
+		} else {
+			$this->Session->setFlash(__('Activity has been NOT added.'));
+		}
+	}
+
 
 /**
  * index method

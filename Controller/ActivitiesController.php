@@ -13,6 +13,9 @@ class ActivitiesController extends AppController {
  *
  * @var array
  */
+
+	var $uses = array('Activity', 'User');
+
 	public $components = array('Paginator');
 
 /**
@@ -20,9 +23,15 @@ class ActivitiesController extends AppController {
  *
  * @return void
  */
+
 	public function index() {
 		$this->Activity->recursive = 0;
 		$this->set('activities', $this->Paginator->paginate());
+	}
+
+	public function select() {
+		$this->Activity->recursive = 0;
+		$this->set('activities', $this->Activity->find('all'));
 	}
 
 /**
