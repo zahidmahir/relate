@@ -31,6 +31,11 @@ class QuizzesController extends AppController {
 			// }
 		}
 		$questions = $this->Question->find('all');
+		$activities = $this->Activity->find('all', 
+			'conditions' => array(
+				'activity'
+			)
+		);
 		// debug($questions);die;
 		$this->set(compact('questions'));
 	}

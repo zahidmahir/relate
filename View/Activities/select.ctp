@@ -1,26 +1,25 @@
-<div class="activities index">
-	<h2><?php echo __('Activities'); ?></h2>
-	<table cellpadding="0" cellspacing="0">
-		<tr>
-				<th><?php echo 'name'; ?></th>
-				<th><?php echo 'frequency'; ?></th>
-				<th class="actions"><?php echo __('Actions'); ?></th>
-		</tr>
-		<?php foreach ($activities as $activity): ?>
-		<tr>
-			<td><?php echo h($activity['Activity']['name']); ?>&nbsp;</td>
-			<td><?php echo h($activity['Activity']['frequency']); ?>&nbsp;</td>
-			<td class="actions">
-				<a class="add_action" href="#" id="<?php echo $activity['Activity']['id']; ?>">Select</a>
-			</td>
-		</tr>
-		<?php endforeach; ?>
-	</table>
-</div>
+<?php
+	$options = array();
+	$frequency = array(
+		'1' => 'Once a week',
+		'4' => 'Several times a week',
+		'7' => 'Daily'
+	);
 
-<script type="text/javascript">
-	$('.add_action').on('click', function() {
-		var id = $(this).attr('id');
-		$.post("<?php echo $this->webroot;?>users/add_activity/" + id);
-	});	
-</script>
+	echo $this->Form->create('Activity', array('controller' => 'Activities', 'action' => 'select'));
+	foreach ($activities as $activity) {
+		$options[$activity['Activity']['id']] = $activity['Activity']['name'];
+	}
+	
+	echo $this->Form->input('Activity.0.id', array('type'=>'select','options'=>$options, 'label' => 'Activity 1'));
+	echo $this->Form->input('Activity.0.frequency', array('type'=>'select','options'=>$frequency, 'label' => 'Frequency'));
+
+	echo $this->Form->input('Activity.1.id', array('type'=>'select','options'=>$options, 'label' => 'Activity 2'));
+	echo $this->Form->input('Activity.1.frequency', array('type'=>'select','options'=>$frequency, 'label' => 'Frequency'));
+
+	echo $this->Form->input('Activity.2.id', array('type'=>'select','options'=>$options, 'label' => 'Activity 3'));
+	echo $this->Form->input('Activity.2.frequency', array('type'=>'select','options'=>$frequency, 'label' => 'Frequency'));
+	
+	echo $this->Form->end(__('Submit'));
+
+?>

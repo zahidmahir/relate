@@ -14,7 +14,7 @@ class ActivitiesController extends AppController {
  * @var array
  */
 
-	var $uses = array('Activity', 'User');
+	var $uses = array('Activity', 'User', 'ActivitiesUser');
 
 	public $components = array('Paginator');
 
@@ -30,8 +30,38 @@ class ActivitiesController extends AppController {
 	}
 
 	public function select() {
+		if ($this->request->is('post')) {
+
+			$data = array();
+			// $data['ActivitiesUser'] = array();
+
+			foreach($this->request->data['Activity'] as $selected_activity) {
+				// array_push($data['ActivitiesUser'],
+				array_push($data,
+					array(
+						'activity_id' => $selected_activity['id'],
+						'user_id' => $this->Auth->user('id'),
+						'frequency' => $selected_activity['frequency']
+					)
+				); 
+			}
+			// debug($data);die;
+			if($this->ActivitiesUser->saveAll($data)) {
+				$this->Session->setFlash(__('The activities have been saved.'));
+				return $this->redirect(array('action' => 'index'));
+			} else {
+				debug($this->ActivitiesUser->validationErrors);die;
+				$this->log(print_r($this->ActivitiesUser->validationErrors, true));
+				$this->Session->setFlash(__('The activity could not be saved. Please, try again.'));
+			}
+		}
 		$this->Activity->recursive = 0;
 		$this->set('activities', $this->Activity->find('all'));
+		$this->ActivitiesUser->recursive = 0;
+		$this->set('user_activities', $this->ActivitiesUser->find('all', array(
+				'conditions' => array ('user_id' => $this->Auth->user('id'))
+			)
+		));
 	}
 
 /**
