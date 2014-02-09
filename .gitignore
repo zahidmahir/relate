@@ -2,6 +2,7 @@ vagrant/.vagrant/
 
 .DS_Store
 
+tmp/*
 web/tmp/*
 web/[Cc]onfig/core.php
 web/[Cc]onfig/database.php
