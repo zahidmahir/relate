@@ -46,6 +46,13 @@ class Response extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		)
+		),
+		'Quiz' => array(
+			'className' => 'Quiz',
+			'foreignKey' => 'quiz_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
 	);
 }
