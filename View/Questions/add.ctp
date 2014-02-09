@@ -6,6 +6,8 @@
  		<div class="question-group">
 			<label for="QuestionContent">Content</label>
 			<input name="data[Question][content]" type="text" id="QuestionContent">
+			<label for="QuestionType">Type</label>
+			<input name="data[Question][type]" type="text" id="QuestionType">
 			<br />
 			<div class="choice-group"></div>
 			

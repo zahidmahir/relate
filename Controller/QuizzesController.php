@@ -13,7 +13,28 @@ class QuizzesController extends AppController {
  *
  * @var array
  */
+	var $uses = array('Quiz', 'Question', 'Activity');
+	
 	public $components = array('Paginator');
+
+	public function take() {
+
+		if ($this->request->is('post')) {
+			debug($this->request->data);die;
+			
+			// $this->Quiz->create();
+			// if ($this->Quiz->save($this->request->data)) {
+			// 	$this->Session->setFlash(__('The quiz has been saved.'));
+			// 	return $this->redirect(array('action' => 'index'));
+			// } else {
+			// 	$this->Session->setFlash(__('The quiz could not be saved. Please, try again.'));
+			// }
+		}
+		$questions = $this->Question->find('all');
+		// debug($questions);die;
+		$this->set(compact('questions'));
+	}
+
 
 /**
  * index method
