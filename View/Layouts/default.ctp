@@ -12,6 +12,9 @@
           echo $this->Html->css('bootstrap-theme.min.css');
           echo $this->Html->css('main.css');
 
+          echo $this->Html->script('vendor/jquery-1.10.1.min.js');
+          echo $this->Html->script('vendor/bootstrap.min.js');
+          echo $this->Html->script('main.js');
           echo $this->Html->script('vendor/modernizr-2.6.2-respond-1.1.0.min.js');
 
           echo $this->fetch('meta');
@@ -20,6 +23,7 @@
         ?>
     </head>
     <body>
+      <?php echo var_dump($auth_user); ?>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
@@ -103,10 +107,5 @@
         <p>&copy; MahirRings 2014</p>
       </footer>
     </div> <!-- /container --> 
-
-    <?php echo $this->Html->script('vendor/jquery-1.10.1.min.js'); ?>
-    <?php echo $this->Html->script('vendor/bootstrap.min.js'); ?>
-    <?php echo $this->Html->script('main.js'); ?>
-
-    </body>
+  </body>
 </html>

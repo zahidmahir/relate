@@ -47,8 +47,9 @@ class QuestionsController extends AppController {
  */
 	public function add() {
 		if ($this->request->is('post')) {
+			// debug($this->request->data);die;
 			$this->Question->create();
-			if ($this->Question->save($this->request->data)) {
+			if ($this->Question->saveAssociated($this->request->data)) {
 				$this->Session->setFlash(__('The question has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
