@@ -13,15 +13,47 @@ class QuizzesController extends AppController {
  *
  * @var array
  */
-	var $uses = array('Quiz', 'Question', 'ActivitiesUser', 'Activity');
-	
+	var $uses = array('Quiz', 'Question', 'Choice', 'ActivitiesUser', 'Activity', 'Response');
 	public $components = array('Paginator');
 
 	public function take() {
 		if ($this->request->is('post')) {
-			debug($this->request->data);die;
+			// debug($this->request->data);die;
 			
-			// $this->Quiz->create();
+			$this->Quiz->create();
+			$this->Quiz->save();
+			$health = 10;
+			foreach($this->request->data['Activity'] as $key => $activity_group) {
+				foreach($activity_group as $question) {
+					foreach($question as $key2 => $choice) {
+
+						$points = $this->Choice->read('value', $choice);
+						if(!empty($points['Choice']['value'])) {
+							$health -= $points['Choice']['value'];
+						}
+
+						$this->Response->create();
+						$this->Response->save(
+							array(
+								'activity_id' => $key,
+								'user_id' => $this->Auth->user('id'),
+								'choice_id' => $choice,
+								'question_id' => $key2,
+								'quiz_id' => $this->Quiz->id
+							)
+						);
+					}
+				}
+			}
+			$this->Quiz->save(array(
+				'id' => $this->Quiz->id,
+				'score' => $health
+			));
+
+die;
+
+
+
 			// if ($this->Quiz->save($this->request->data)) {
 			// 	$this->Session->setFlash(__('The quiz has been saved.'));
 			// 	return $this->redirect(array('action' => 'index'));
