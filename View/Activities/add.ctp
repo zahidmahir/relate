@@ -4,8 +4,6 @@
 		<legend><?php echo __('Add Activity'); ?></legend>
 	<?php
 		echo $this->Form->input('name');
-		echo $this->Form->input('frequency');
-		echo $this->Form->input('User');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
