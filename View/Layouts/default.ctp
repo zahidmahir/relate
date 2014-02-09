@@ -24,7 +24,7 @@
   </head>
   <body>
     <br />
-    <?php //echo var_dump($auth_user); ?>
+    <?php echo var_dump($auth_user); ?>
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
