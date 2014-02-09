@@ -45,21 +45,18 @@ class QuizzesController extends AppController {
 					}
 				}
 			}
-			$this->Quiz->save(array(
+			if($health < 0) {
+				$health =  0;
+			}
+			if($this->Quiz->save(array(
 				'id' => $this->Quiz->id,
 				'score' => $health
-			));
-
-die;
-
-
-
-			// if ($this->Quiz->save($this->request->data)) {
-			// 	$this->Session->setFlash(__('The quiz has been saved.'));
-			// 	return $this->redirect(array('action' => 'index'));
-			// } else {
-			// 	$this->Session->setFlash(__('The quiz could not be saved. Please, try again.'));
-			// }
+			))) {
+				$this->Session->setFlash(__('The quiz has been saved.'));
+				return $this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
+			} else {
+				$this->Session->setFlash(__('The quiz could not be saved. Please, try again.'));
+			}
 		}
 		// $this->Question->recursive = 1;
 		$questions = $this->Question->find('all');
