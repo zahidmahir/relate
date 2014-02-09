@@ -1,10 +1,20 @@
 <div class="text-center">
-	<img>logo</img>
+	<?php echo $this->Html->image('eighthearts.png', array('alt' => 'Health')); ?>
 
-	<input type="text" class="form-control" placeholder="Email">
-	<input type="text" class="form-control" placeholder="Password">
-	<div class="btn-group">
-		<button type="button" class="btn btn-default">Sign In</button>
-		<button type="button" class="btn btn-default">Join Us</button>
+	<hr />
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">Report</h3>
+		</div>
+		<div class="panel-body">
+		Panel content
+		</div>
+		<table class="table">
+			<tr>
+				<td>Activity 1</td>
+				<td>Trend</td>
+				<td>Good/Bad<span class="glyphicon glyphicon-ok-sign"></span></td>
+			</tr>
+		</table>
 	</div>
 </div>
