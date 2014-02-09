@@ -1,0 +1,1 @@
+Maybe you can talk to a friend or family member, or if you're worried about your safety, call 866.331.9474 or text "loveis" to 22522 to speak to someone free and confidentially.

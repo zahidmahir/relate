@@ -48,7 +48,7 @@ class ActivitiesController extends AppController {
 			// debug($data);die;
 			if($this->ActivitiesUser->saveAll($data)) {
 				$this->Session->setFlash(__('The activities have been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('controller' => 'quizzes', 'action' => 'take'));
 			} else {
 				debug($this->ActivitiesUser->validationErrors);die;
 				$this->log(print_r($this->ActivitiesUser->validationErrors, true));

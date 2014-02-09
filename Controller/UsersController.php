@@ -71,7 +71,7 @@ class UsersController extends AppController {
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('controller' => 'activities', 'action' => 'select'));
 			} else {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}
@@ -159,50 +159,54 @@ class UsersController extends AppController {
 			)
 		);
 
-		$previous_quiz = $reports[1];
-		$current_quiz = $reports[0];
+		if(count($reports) > 0) {
+			$current_quiz = $reports[0];			
+		
+			$this->Response->recursive = -1;
+			$current_responses = $this->Response->find('all', 
+				array(
+					'conditions' => array(
+						'Response.user_id' => $this->Auth->user('id'), 
+						'Response.quiz_id' => $current_quiz['Quiz']['id']
+					)
+				)	
+			);
 
-		$this->Response->recursive = -1;
-		$current_responses = $this->Response->find('all', 
-			array(
-				'conditions' => array(
-					'Response.user_id' => $this->Auth->user('id'), 
-					'Response.quiz_id' => $current_quiz['Quiz']['id']
-				)
-			)	
-		);
 
-		$previous_responses = $this->Response->find('all', 
-			array(
-				'conditions' => array(
-					'Response.user_id' => $this->Auth->user('id'), 
-					'Response.quiz_id' => $previous_quiz['Quiz']['id']
-				)
-			)	
-		);
+			$a = $this->Activity->find('list');
+			// debug($a);die;
 
-		$a = $this->Activity->find('list');
-		// debug($a);die;
+			$activities = array();
+			$activities['current'] = array();
 
-		$activities = array();
-		$activities['previous'] = array();
-		$activities['current'] = array();
-
-		foreach($current_responses as $response) {
-			if(empty($activities['current'][$a[$response['Response']['activity_id']]])) {
-				$activities['current'][$a[$response['Response']['activity_id']]]=0;
+			foreach($current_responses as $response) {
+				if(empty($activities['current'][$a[$response['Response']['activity_id']]])) {
+					$activities['current'][$a[$response['Response']['activity_id']]]=0;
+				}
+				$activities['current'][$a[$response['Response']['activity_id']]] +=$response['Response']['choice_value'];
 			}
-			$activities['current'][$a[$response['Response']['activity_id']]] +=$response['Response']['choice_value'];
-		}
+			$this->set('current_score', $current_quiz['Quiz']['score']);
 
-		foreach($previous_responses as $response) {
-			if(empty($activities['previous'][$a[$response['Response']['activity_id']]])) {
-				$activities['previous'][$a[$response['Response']['activity_id']]]=0;
+			if(count($reports) > 1){
+				$activities['previous'] = array();
+				$previous_quiz = $reports[1];
+				$previous_responses = $this->Response->find('all', 
+					array(
+						'conditions' => array(
+							'Response.user_id' => $this->Auth->user('id'), 
+							'Response.quiz_id' => $previous_quiz['Quiz']['id']
+						)
+					)	
+				);
+				foreach($previous_responses as $response) {
+					if(empty($activities['previous'][$a[$response['Response']['activity_id']]])) {
+						$activities['previous'][$a[$response['Response']['activity_id']]]=0;
+					}
+					$activities['previous'][$a[$response['Response']['activity_id']]] +=$response['Response']['choice_value'];
+				}
 			}
-			$activities['previous'][$a[$response['Response']['activity_id']]] +=$response['Response']['choice_value'];
-		}
 
-		$this->set('current_score', $current_quiz['Quiz']['score']);
-		$this->set(compact('activities'));
+			$this->set(compact('activities'));
+		}
 	}
 }
