@@ -50,7 +50,8 @@ class QuizzesController extends AppController {
 			}
 			if($this->Quiz->save(array(
 				'id' => $this->Quiz->id,
-				'score' => $health
+				'score' => $health,
+				'user_id' => $this->Auth->user('id')
 			))) {
 				$this->Session->setFlash(__('The quiz has been saved.'));
 				return $this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));

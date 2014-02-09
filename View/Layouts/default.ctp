@@ -24,15 +24,20 @@
   </head>
   <body>
     <br />
-    <?php echo var_dump($auth_user); ?>
-
+    <?php 
+      if(empty($auth_user)) {
+        if(substr($_SERVER['REQUEST_URI'], strrpos($_SERVER['REQUEST_URI'], '/')) != '/splash') {
+          header('Location: ' . $this->webroot . 'splash'); die;
+        }
+      }
+    ?>
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
           <a class="navbar-brand navbar-left" href="#">
             <span class="glyphicon glyphicon-home"></span>
           </a>
         <p class="navbar-text navbar-right">
-          <?php 
+          <?php
             if(!empty($auth_user)) {
               echo $auth_user['email'];
             }
@@ -51,7 +56,7 @@
       <hr>
 
       <footer>
-        <p>&copy; MahirRings 2014</p>
+        <p>&copy; Mahir - Rings 2014</p>
       </footer>
     </div> <!-- /container --> 
   </body>

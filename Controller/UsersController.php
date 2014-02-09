@@ -14,7 +14,7 @@ class UsersController extends AppController {
  * @var array
  */
 	
-	var $uses = array('User', 'Activity', 'ActivitiesUser');
+	var $uses = array('User', 'Activity', 'ActivitiesUser', 'Quiz', 'Response');
 	
 	public $components = array('Paginator');
 
@@ -29,7 +29,7 @@ class UsersController extends AppController {
 			'activity_id' => $activity_id
 		);
 		if($this->ActivitiesUser->save($data)) {
-			$this->Session->setFlash(__('Activity has been added.'));
+			$this->Session->setFlash(__('Activity has been added. Please login'));
 		} else {
 			$this->Session->setFlash(__('Activity has been NOT added.'));
 		}
@@ -144,5 +144,15 @@ class UsersController extends AppController {
 
 	public function logout() {
     return $this->redirect($this->Auth->logout());
+	}
+
+	public function home() {
+		$this->Quiz->recursive = -1;
+		$report = $this->Quiz->find('all', array(
+			'conditions' => array('user_id' => $this->Auth->user('id'))
+		));
+		$score = $report[0]['Quiz']['score'];
+
+		$this->set(compact('score'));
 	}
 }
