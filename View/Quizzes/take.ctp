@@ -21,7 +21,7 @@
 			foreach($question['Choice'] as $choice) {
 				$options[$choice['id']] = $choice['content'];
 			}
-			$name = 'data[Question][' . $question['Question']['id'] . '][' . $activity['id'] . ']';
+			$name = 'data[Activity][' . $activity['id'] . '][Question][' . $question['Question']['id'] . ']';
 			echo $this->Form->input($question['Question']['id'], array('type' => 'radio', 'options' => $options, 'separator' => '<br />', 'legend' => $question['Question']['content'], 'name' => $name));
 		}
 	}	
