@@ -148,11 +148,61 @@ class UsersController extends AppController {
 
 	public function home() {
 		$this->Quiz->recursive = -1;
-		$report = $this->Quiz->find('all', array(
-			'conditions' => array('user_id' => $this->Auth->user('id'))
-		));
-		$score = $report[0]['Quiz']['score'];
 
-		$this->set(compact('score'));
+		$reports = $this->Quiz->find('all', 
+			array(
+				'conditions' => array(
+					'Quiz.user_id' => $this->Auth->user('id'), 
+				),
+		    'order' => array('Quiz.created DESC'),
+		    'limit' => 2
+			)
+		);
+
+		$previous_quiz = $reports[1];
+		$current_quiz = $reports[0];
+
+		$this->Response->recursive = -1;
+		$current_responses = $this->Response->find('all', 
+			array(
+				'conditions' => array(
+					'Response.user_id' => $this->Auth->user('id'), 
+					'Response.quiz_id' => $current_quiz['Quiz']['id']
+				)
+			)	
+		);
+
+		$previous_responses = $this->Response->find('all', 
+			array(
+				'conditions' => array(
+					'Response.user_id' => $this->Auth->user('id'), 
+					'Response.quiz_id' => $previous_quiz['Quiz']['id']
+				)
+			)	
+		);
+
+		$a = $this->Activity->find('list');
+		// debug($a);die;
+
+		$activities = array();
+		$activities['previous'] = array();
+		$activities['current'] = array();
+
+		foreach($current_responses as $response) {
+			if(empty($activities['current'][$a[$response['Response']['activity_id']]])) {
+				$activities['current'][$a[$response['Response']['activity_id']]]=0;
+			}
+			$activities['current'][$a[$response['Response']['activity_id']]] +=$response['Response']['choice_value'];
+		}
+
+		foreach($previous_responses as $response) {
+			if(empty($activities['previous'][$a[$response['Response']['activity_id']]])) {
+				$activities['previous'][$a[$response['Response']['activity_id']]]=0;
+			}
+			$activities['previous'][$a[$response['Response']['activity_id']]] +=$response['Response']['choice_value'];
+		}
+
+		$this->set('current_score', $current_quiz['Quiz']['score']);
+		$this->set(compact('activities'));
 	}
 }

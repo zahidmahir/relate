@@ -23,6 +23,7 @@ class QuizzesController extends AppController {
 			$this->Quiz->create();
 			$this->Quiz->save();
 			$health = 10;
+
 			foreach($this->request->data['Activity'] as $key => $activity_group) {
 				foreach($activity_group as $question) {
 					foreach($question as $key2 => $choice) {
@@ -39,7 +40,8 @@ class QuizzesController extends AppController {
 								'user_id' => $this->Auth->user('id'),
 								'choice_id' => $choice,
 								'question_id' => $key2,
-								'quiz_id' => $this->Quiz->id
+								'quiz_id' => $this->Quiz->id,
+								'choice_value' => $points['Choice']['value']
 							)
 						);
 					}
@@ -54,7 +56,7 @@ class QuizzesController extends AppController {
 				'user_id' => $this->Auth->user('id')
 			))) {
 				$this->Session->setFlash(__('The quiz has been saved.'));
-				return $this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
+				return $this->redirect(array('controller' => 'users', 'action' => 'home'));
 			} else {
 				$this->Session->setFlash(__('The quiz could not be saved. Please, try again.'));
 			}

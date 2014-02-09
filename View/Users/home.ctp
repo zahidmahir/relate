@@ -2,7 +2,7 @@
 <div class="text-center col-md-6">
 	<?php 
 		$img = '';
-		switch($score){
+		switch($current_score){
 			case 0; $img = 'zerohearts.png'; break;
 			case 1; $img = 'oneheart.png'; break;
 			case 2; $img = 'twohearts.png'; break;
@@ -25,21 +25,20 @@
 			<h3 class="panel-title">Report</h3>
 		</div>
 		<table class="table">
-			<tr>
-				<td>Activity 1</td>
-				<td>Trend</td>
-				<td>Good/Bad<span class="glyphicon glyphicon-ok-sign"></span></td>
-			</tr>
-			<tr>
-				<td>Activity 2</td>
-				<td>Trend</td>
-				<td>Good/Bad<span class="glyphicon glyphicon-remove-sign"></span></td>
-			</tr>
-			<tr>
-				<td>Activity 3</td>
-				<td>Trend</td>
-				<td>Good/Bad<span class="glyphicon glyphicon-ok-sign"></span></td>
-			</tr>
+
+			<?php foreach($activities['current'] as $key => $activity): ?>
+				<tr>
+					<td><?php echo $key; ?></td>
+					<td>
+						<?php if($activities['current'][$key] < $activities['previous'][$key]): ?>
+							<span class="glyphicon glyphicon-remove-sign"></span>
+						 <?php else: ?>
+							<span class="glyphicon glyphicon-ok-sign"></span>
+						<?php endif; ?>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+
 		</table>
 	</div>
 	<a href="#">Help</a>
