@@ -1,8 +1,0 @@
-name "relate"
-description ""
-depends "apt"
-depends "apache2"
-depends "openssl"
-depends "mysql"
-depends "database"
-depends "php"
